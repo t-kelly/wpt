@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>TestDriver click method</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/resources/testdriver.js"></script>
+<script src="/resources/testdriver-vendor.js"></script>
+
+<iframe src="click_child.html"></iframe>
+
+<script>
+async_test(t => {
+  addEventListener("load", t.step_func(() => { 
+      let child = frames[0];
+      let button = child.document.getElementById("button");
+      test_driver
+          .click(button)
+          .then(t.step_func(() => {
+              assert_equals(child.document.getElementById("log").textContent, "PASS");
+              t.done()
+          }))
+          .catch(t.step_func((e) => {console.log(e); assert_unreached("click failed")}));
+  }));
+});
+</script>
