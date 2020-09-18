@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>CSS Overflow: test scrollbar-gutter: stable both (classic scrollbars)</title>
+<title>CSS Overflow: test scrollbar-gutter: stable both (classic scrollbars, horizontal text)</title>
 <link rel="author" title="Felipe Erias Morandeira" href="mailto:felipeerias@gmail.com"/>
 <link rel="help" href="https://www.w3.org/TR/css-overflow-4/#scollbar-gutter-property"/>
 <meta name="assert" content="Test scrollbar-gutter: stable with custom classic scrollbars">
@@ -11,6 +11,8 @@
 
     .container {
         scrollbar-gutter: stable both;
+        writing-mode: horizontal-tb;
+        overflow-x: auto;
         height: 200px;
         width: 200px;
         margin: 1px;
@@ -46,25 +48,19 @@
         border-radius: 10px;
     }
 
-    /* writing modes */
-    .horizontal {
-        writing-mode: horizontal-tb;
-        overflow-x: auto;
+    /* writing directions */
+    .ltr {
+        direction: ltr;
     }
-    .vertical   {
-        writing-mode: vertical-rl;
-        overflow-y: auto;
+    .rtl   {
+        direction: rtl;
     }
 
     /* overflow on the block direction */
-    .horizontal.auto    { overflow-y: auto;    }
-    .horizontal.scroll  { overflow-y: scroll;  }
-    .horizontal.visible { overflow:   visible; }
-    .horizontal.hidden  { overflow-y: hidden;  }
-    .vertical.auto      { overflow-x: auto;    }
-    .vertical.scroll    { overflow-x: scroll;  }
-    .vertical.visible   { overflow:   visible; }
-    .vertical.hidden    { overflow-x: hidden;  }
+    .container.auto    { overflow-y: auto;    }
+    .container.scroll  { overflow-y: scroll;  }
+    .container.visible { overflow:   visible; }
+    .container.hidden  { overflow-y: hidden;  }
 
     /* Note: not testing with overflow: clip; */
 
@@ -74,129 +70,129 @@
     function performTest() {
         setup({explicit_done: true});
 
-        // horizontal
+        // ltr
 
         test(function() {
-            let container = document.getElementById('container_auto_h');
-            let content = document.getElementById('content_auto_h');
+            let container = document.getElementById('container_auto_ltr');
+            let content = document.getElementById('content_auto_ltr');
             assert_equals(container.scrollWidth, 160, "auto/stable both scrollWidth");
             assert_equals(container.clientWidth, 160, "auto/stable both clientWidth");
             assert_equals(container.offsetLeft, content.offsetLeft - 20, "auto/stable both offsetLeft");
             assert_equals(container.clientWidth, content.clientWidth, "auto/stable both clientWidth");
             assert_not_equals(container.offsetWidth, content.offsetWidth, "auto/stable both offsetWidth");
-        }, "Unexpected layout: overflow auto, scrollbar-gutter stable both, horizontal-tb");
+        }, "overflow auto, scrollbar-gutter stable both, horizontal-tb, ltr");
 
         test(function() {
-            let container = document.getElementById('container_scroll_h');
-            let content = document.getElementById('content_scroll_h');
+            let container = document.getElementById('container_scroll_ltr');
+            let content = document.getElementById('content_scroll_ltr');
             assert_equals(container.scrollWidth, 160, "scroll/stable both scrollWidth");
             assert_equals(container.clientWidth, 160, "scroll/stable both clientWidth");
             assert_equals(container.offsetLeft, content.offsetLeft - 20, "scroll/stable both offsetLeft");
             assert_equals(container.clientWidth, content.clientWidth, "scroll/stable both clientWidth");
             assert_not_equals(container.offsetWidth, content.offsetWidth, "scroll/stable both offsetWidth");
-        }, "Unexpected layout: overflow scroll, scrollbar-gutter stable both, horizontal-tb");
+        }, "overflow scroll, scrollbar-gutter stable both, horizontal-tb, ltr");
 
         test(function() {
-            let container = document.getElementById('container_visible_h');
-            let content = document.getElementById('content_visible_h');
+            let container = document.getElementById('container_visible_ltr');
+            let content = document.getElementById('content_visible_ltr');
             assert_equals(container.scrollWidth, 200, "visible/stable both scrollWidth");
             assert_equals(container.clientWidth, 200, "visible/stable both clientWidth");
             assert_equals(container.offsetLeft, content.offsetLeft, "visible/stable both offsetLeft");
             assert_equals(container.clientWidth, content.clientWidth, "visible/stable both clientWidth");
             assert_equals(container.offsetWidth, content.offsetWidth, "visible/stable both offsetWidth");
-        }, "Unexpected layout: overflow visible, scrollbar-gutter stable both, horizontal-tb");
+        }, "overflow visible, scrollbar-gutter stable both, horizontal-tb, ltr");
 
         test(function() {
-            let container = document.getElementById('container_hidden_h');
-            let content = document.getElementById('content_hidden_h');
+            let container = document.getElementById('container_hidden_ltr');
+            let content = document.getElementById('content_hidden_ltr');
             assert_equals(container.scrollWidth, 200, "hidden/stable both scrollWidth");
             assert_equals(container.clientWidth, 200, "hidden/stable both clientWidth");
             assert_equals(container.offsetLeft, content.offsetLeft, "hidden/stable both offsetLeft");
             assert_equals(container.clientWidth, content.clientWidth, "hidden/stable both clientWidth");
             assert_equals(container.offsetWidth, content.offsetWidth, "hidden/stable both offsetWidth");
-        }, "Unexpected layout: overflow hidden, scrollbar-gutter stable both, horizontal-tb");
+        }, "overflow hidden, scrollbar-gutter stable both, horizontal-tb, ltr");
 
         test(function() {
-            let container = document.getElementById('container_visible_force_h');
-            let content = document.getElementById('content_visible_force_h');
+            let container = document.getElementById('container_visible_force_ltr');
+            let content = document.getElementById('content_visible_force_ltr');
             assert_equals(container.scrollWidth, 160, "visible/stable both force scrollWidth");
             assert_equals(container.clientWidth, 160, "visible/stable both force clientWidth");
             assert_equals(container.offsetLeft, content.offsetLeft - 20, "visible/stable both force offsetLeft");
             assert_equals(container.clientWidth, content.clientWidth, "visible/stable both force clientWidth");
             assert_not_equals(container.offsetWidth, content.offsetWidth, "visible/stable both force offsetWidth");
-        }, "Unexpected layout: overflow visible, scrollbar-gutter stable both force, horizontal-tb");
+        }, "overflow visible, scrollbar-gutter stable both force, horizontal-tb, ltr");
 
         test(function() {
-            let container = document.getElementById('container_hidden_force_h');
-            let content = document.getElementById('content_hidden_force_h');
+            let container = document.getElementById('container_hidden_force_ltr');
+            let content = document.getElementById('content_hidden_force_ltr');
             assert_equals(container.scrollWidth, 160, "hidden/stable both force scrollWidth");
             assert_equals(container.clientWidth, 160, "hidden/stable both force clientWidth");
             assert_equals(container.offsetLeft, content.offsetLeft - 20, "hidden/stable both force offsetLeft");
             assert_equals(container.clientWidth, content.clientWidth, "hidden/stable both force clientWidth");
             assert_not_equals(container.offsetWidth, content.offsetWidth, "hidden/stable both force offsetWidth");
-        }, "Unexpected layout: overflow hidden, scrollbar-gutter stable both force, horizontal-tb");
+        }, "overflow hidden, scrollbar-gutter stable both force, horizontal-tb, ltr");
 
-        // vertical
-
-        test(function() {
-            let container = document.getElementById('container_auto_v');
-            let content = document.getElementById('content_auto_v');
-            assert_equals(container.scrollHeight, 160, "auto/stable both scrollHeight");
-            assert_equals(container.clientHeight, 160, "auto/stable both clientHeight");
-            assert_equals(container.offsetTop, content.offsetTop - 20, "auto/stable both offsetTop");
-            assert_equals(container.clientHeight, content.clientHeight, "auto/stable both clientHeight");
-            assert_not_equals(container.offsetHeight, content.offsetHeight, "auto/stable both offsetHeight");
-        }, "Unexpected layout: overflow auto, scrollbar-gutter stable both, vertical-rl");
+        // rtl
 
         test(function() {
-            let container = document.getElementById('container_scroll_v');
-            let content = document.getElementById('content_scroll_v');
-            assert_equals(container.scrollHeight, 160, "scroll/stable both scrollHeight");
-            assert_equals(container.clientHeight, 160, "scroll/stable both clientHeight");
-            assert_equals(container.offsetTop, content.offsetTop - 20, "scroll/stable both offsetTop");
-            assert_equals(container.clientHeight, content.clientHeight, "scroll/stable both clientHeight");
-            assert_not_equals(container.offsetHeight, content.offsetHeight, "scroll/stable both offsetHeight");
-        }, "Unexpected layout: overflow scroll, scrollbar-gutter stable both, vertical-rl");
+            let container = document.getElementById('container_auto_rtl');
+            let content = document.getElementById('content_auto_rtl');
+            assert_equals(container.scrollWidth, 160, "auto/stable both scrollWidth");
+            assert_equals(container.clientWidth, 160, "auto/stable both clientWidth");
+            assert_equals(container.offsetLeft, content.offsetLeft - 20, "auto/stable both offsetLeft");
+            assert_equals(container.clientWidth, content.clientWidth, "auto/stable both clientWidth");
+            assert_not_equals(container.offsetWidth, content.offsetWidth, "auto/stable both offsetWidth");
+        }, "overflow auto, scrollbar-gutter stable both, horizontal-tb, rtl");
 
         test(function() {
-            let container = document.getElementById('container_visible_v');
-            let content = document.getElementById('content_visible_v');
-            assert_equals(container.scrollHeight, 200, "visible/stable both scrollHeight");
-            assert_equals(container.clientHeight, 200, "visible/stable both clientHeight");
-            assert_equals(container.offsetTop, content.offsetTop, "visible/stable both offsetTop");
-            assert_equals(container.clientHeight, content.clientHeight, "visible/stable both clientHeight");
-            assert_equals(container.offsetHeight, content.offsetHeight, "visible/stable both offsetHeight");
-        }, "Unexpected layout: overflow visible, scrollbar-gutter stable both, vertical-rl");
+            let container = document.getElementById('container_scroll_rtl');
+            let content = document.getElementById('content_scroll_rtl');
+            assert_equals(container.scrollWidth, 160, "scroll/stable both scrollWidth");
+            assert_equals(container.clientWidth, 160, "scroll/stable both clientWidth");
+            assert_equals(container.offsetLeft, content.offsetLeft - 20, "scroll/stable both offsetLeft");
+            assert_equals(container.clientWidth, content.clientWidth, "scroll/stable both clientWidth");
+            assert_not_equals(container.offsetWidth, content.offsetWidth, "scroll/stable both offsetWidth");
+        }, "overflow scroll, scrollbar-gutter stable both, horizontal-tb, rtl");
 
         test(function() {
-            let container = document.getElementById('container_hidden_v');
-            let content = document.getElementById('content_hidden_v');
-            assert_equals(container.scrollHeight, 200, "hidden/stable both scrollHeight");
-            assert_equals(container.clientHeight, 200, "hidden/stable both clientHeight");
-            assert_equals(container.offsetTop, content.offsetTop, "hidden/stable both offsetTop");
-            assert_equals(container.clientHeight, content.clientHeight, "hidden/stable both clientHeight");
-            assert_equals(container.offsetHeight, content.offsetHeight, "hidden/stable both offsetHeight");
-        }, "Unexpected layout: overflow hidden, scrollbar-gutter stable both, vertical-rl");
+            let container = document.getElementById('container_visible_rtl');
+            let content = document.getElementById('content_visible_rtl');
+            assert_equals(container.scrollWidth, 200, "visible/stable both scrollWidth");
+            assert_equals(container.clientWidth, 200, "visible/stable both clientWidth");
+            assert_equals(container.offsetLeft, content.offsetLeft, "visible/stable both offsetLeft");
+            assert_equals(container.clientWidth, content.clientWidth, "visible/stable both clientWidth");
+            assert_equals(container.offsetWidth, content.offsetWidth, "visible/stable both offsetWidth");
+        }, "overflow visible, scrollbar-gutter stable both, horizontal-tb, rtl");
 
         test(function() {
-            let container = document.getElementById('container_visible_force_v');
-            let content = document.getElementById('content_visible_force_v');
-            assert_equals(container.scrollHeight, 160, "visible/stable both scrollHeight");
-            assert_equals(container.clientHeight, 160, "visible/stable both clientHeight");
-            assert_equals(container.offsetTop, content.offsetTop - 20, "visible/stable both offsetTop");
-            assert_equals(container.clientHeight, content.clientHeight, "visible/stable both clientHeight");
-            assert_not_equals(container.offsetHeight, content.offsetHeight, "visible/stable both offsetHeight");
-        }, "Unexpected layout: overflow visible, scrollbar-gutter stable both force, vertical-rl");
+            let container = document.getElementById('container_hidden_rtl');
+            let content = document.getElementById('content_hidden_rtl');
+            assert_equals(container.scrollWidth, 200, "hidden/stable both scrollWidth");
+            assert_equals(container.clientWidth, 200, "hidden/stable both clientWidth");
+            assert_equals(container.offsetLeft, content.offsetLeft, "hidden/stable both offsetLeft");
+            assert_equals(container.clientWidth, content.clientWidth, "hidden/stable both clientWidth");
+            assert_equals(container.offsetWidth, content.offsetWidth, "hidden/stable both offsetWidth");
+        }, "overflow hidden, scrollbar-gutter stable both, horizontal-tb, rtl");
 
         test(function() {
-            let container = document.getElementById('container_hidden_force_v');
-            let content = document.getElementById('content_hidden_force_v');
-            assert_equals(container.scrollHeight, 160, "hidden/stable both scrollHeight");
-            assert_equals(container.clientHeight, 160, "hidden/stable both clientHeight");
-            assert_equals(container.offsetTop, content.offsetTop - 20, "hidden/stable both offsetTop");
-            assert_equals(container.clientHeight, content.clientHeight, "hidden/stable both clientHeight");
-            assert_not_equals(container.offsetHeight, content.offsetHeight, "hidden/stable both offsetHeight");
-        }, "Unexpected layout: overflow hidden, scrollbar-gutter stable both force, vertical-rl");
+            let container = document.getElementById('container_visible_force_rtl');
+            let content = document.getElementById('content_visible_force_rtl');
+            assert_equals(container.scrollWidth, 160, "visible/stable both scrollWidth");
+            assert_equals(container.clientWidth, 160, "visible/stable both clientWidth");
+            assert_equals(container.offsetLeft, content.offsetLeft - 20, "visible/stable both offsetLeft");
+            assert_equals(container.clientWidth, content.clientWidth, "visible/stable both clientWidth");
+            assert_not_equals(container.offsetWidth, content.offsetWidth, "visible/stable both offsetWidth");
+        }, "overflow visible, scrollbar-gutter stable both force, horizontal-tb, rtl");
+
+        test(function() {
+            let container = document.getElementById('container_hidden_force_rtl');
+            let content = document.getElementById('content_hidden_force_rtl');
+            assert_equals(container.scrollWidth, 160, "hidden/stable both scrollWidth");
+            assert_equals(container.clientWidth, 160, "hidden/stable both clientWidth");
+            assert_equals(container.offsetLeft, content.offsetLeft - 20, "hidden/stable both offsetLeft");
+            assert_equals(container.clientWidth, content.clientWidth, "hidden/stable both clientWidth");
+            assert_not_equals(container.offsetWidth, content.offsetWidth, "hidden/stable both offsetWidth");
+        }, "overflow hidden, scrollbar-gutter stable both force, horizontal-tb, rtl");
 
         done();
     }
@@ -204,60 +200,60 @@
 </script>
 <body onload="performTest()">
 
-    Test scrollbar-gutter: stable both, writing-mode: horizontal-tb
+    Test scrollbar-gutter: stable both, direction: ltr
 
-    <div class="container classic horizontal auto" id="container_auto_h">
-        <div class="content" id="content_auto_h">overflow-y: auto</div>
+    <div class="container classic ltr auto" id="container_auto_ltr">
+        <div class="content" id="content_auto_ltr">overflow-y: auto</div>
     </div>
 
-    <div class="container classic horizontal scroll" id="container_scroll_h">
-        <div class="content" id="content_scroll_h">overflow-y: scroll</div>
+    <div class="container classic ltr scroll" id="container_scroll_ltr">
+        <div class="content" id="content_scroll_ltr">overflow-y: scroll</div>
     </div>
 
-    <div class="container classic horizontal visible" id="container_visible_h">
-        <div class="content" id="content_visible_h">overflow: visible</div>
+    <div class="container classic ltr visible" id="container_visible_ltr">
+        <div class="content" id="content_visible_ltr">overflow: visible</div>
     </div>
 
-    <div class="container classic horizontal hidden" id="container_hidden_h">
-        <div class="content" id="content_hidden_h">overflow-y: hidden</div>
-    </div>
-
-    scrollbar-gutter: stable both force
-
-    <div class="container classic horizontal visible force" id="container_visible_force_h">
-        <div class="content" id="content_visible_force_h">overflow: visible (force)</div>
-    </div>
-
-    <div class="container classic horizontal hidden force" id="container_hidden_force_h">
-        <div class="content" id="content_hidden_force_h">overflow-y: hidden (force)</div>
-    </div>
-
-    writing-mode: vertical-rl;
-
-    <div class="container classic vertical auto" id="container_auto_v">
-        <div class="content" id="content_auto_v">overflow-x: auto</div>
-    </div>
-
-    <div class="container classic vertical scroll" id="container_scroll_v">
-        <div class="content" id="content_scroll_v">overflow-x: scroll</div>
-    </div>
-
-    <div class="container classic vertical visible" id="container_visible_v">
-        <div class="content" id="content_visible_v">overflow: visible</div>
-    </div>
-
-    <div class="container classic vertical hidden" id="container_hidden_v">
-        <div class="content" id="content_hidden_v">overflow-x: hidden</div>
+    <div class="container classic ltr hidden" id="container_hidden_ltr">
+        <div class="content" id="content_hidden_ltr">overflow-y: hidden</div>
     </div>
 
     scrollbar-gutter: stable both force
 
-    <div class="container classic vertical visible force" id="container_visible_force_v">
-        <div class="content" id="content_visible_force_v">overflow: visible</div>
+    <div class="container classic ltr visible force" id="container_visible_force_ltr">
+        <div class="content" id="content_visible_force_ltr">overflow: visible (force)</div>
     </div>
 
-    <div class="container classic vertical hidden force" id="container_hidden_force_v">
-        <div class="content" id="content_hidden_force_v">overflow-x: hidden</div>
+    <div class="container classic ltr hidden force" id="container_hidden_force_ltr">
+        <div class="content" id="content_hidden_force_ltr">overflow-y: hidden (force)</div>
+    </div>
+
+    direction: rtl
+
+    <div class="container classic rtl auto" id="container_auto_rtl">
+        <div class="content" id="content_auto_rtl">overflow-x: auto</div>
+    </div>
+
+    <div class="container classic rtl scroll" id="container_scroll_rtl">
+        <div class="content" id="content_scroll_rtl">overflow-x: scroll</div>
+    </div>
+
+    <div class="container classic rtl visible" id="container_visible_rtl">
+        <div class="content" id="content_visible_rtl">overflow: visible</div>
+    </div>
+
+    <div class="container classic rtl hidden" id="container_hidden_rtl">
+        <div class="content" id="content_hidden_rtl">overflow-x: hidden</div>
+    </div>
+
+    scrollbar-gutter: stable both force
+
+    <div class="container classic rtl visible force" id="container_visible_force_rtl">
+        <div class="content" id="content_visible_force_rtl">overflow: visible</div>
+    </div>
+
+    <div class="container classic rtl hidden force" id="container_hidden_force_rtl">
+        <div class="content" id="content_hidden_force_rtl">overflow-x: hidden</div>
     </div>
 
 </body>
